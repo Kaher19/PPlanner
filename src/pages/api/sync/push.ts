@@ -13,15 +13,15 @@
  */
 
 import type { APIRoute } from 'astro';
-import { getSession, createSessionCookie } from '../../../../lib/session.js';
+import { getSession, createSessionCookie } from '../../../lib/session.ts';
 import {
   getValidAccessToken,
   toGoogleEvent,
   createCalendarEvent,
   updateCalendarEvent,
-} from '../../../../lib/googleCalendar.js';
-import { isValidEvent } from '../../../../lib/eventStorage.js';
-import type { PlannerEvent } from '../../../../types/index.js';
+} from '../../../lib/googleCalendar.ts';
+import { isValidEvent } from '../../../lib/eventStorage.ts';
+import type { PlannerEvent } from '../../../types/index.ts';
 
 const MAX_EVENTS_PER_REQUEST = 100;
 

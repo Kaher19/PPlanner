@@ -12,12 +12,12 @@
  */
 
 import type { APIRoute } from 'astro';
-import { getSession, createSessionCookie } from '../../../../lib/session.js';
+import { getSession, createSessionCookie } from '../../../lib/session.ts';
 import {
   getValidAccessToken,
   listCalendarEvents,
   fromGoogleEvent,
-} from '../../../../lib/googleCalendar.js';
+} from '../../../lib/googleCalendar.ts';
 import { addDays } from 'date-fns';
 
 // Pull events for a 60-day window centered around today (30 past + 30 future)
