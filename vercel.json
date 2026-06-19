@@ -1,8 +1,5 @@
 {
-  "framework": {
-    "name": "astro",
-    "settings": {}
-  },
+  "framework": null,
   "headers": [
     {
       "source": "/(.*)",
