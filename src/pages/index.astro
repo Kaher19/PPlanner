@@ -1,0 +1,48 @@
+---
+// PPlaner — Main Page
+// The React islands are loaded here. The page is rendered as static HTML shell
+// and each island hydrates independently.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WeeklyCalendar from '../components/WeeklyCalendar';
+import AuthButton from '../components/AuthButton';
+import SyncPanel from '../components/SyncPanel';
+
+// Check for OAuth error query params (set by callback on failure)
+const url = new URL(Astro.request.url);
+const oauthError = url.searchParams.get('error');
+---
+
+<BaseLayout>
+  <!-- App Header -->
+  <header class="app-header" role="banner">
+    <a href="/" class="app-logo" aria-label="PPlaner home">
+      <div class="app-logo-icon" aria-hidden="true">✦</div>
+      <span class="app-logo-text">PPlaner</span>
+    </a>
+
+    <div class="header-spacer"></div>
+
+    <!-- Auth button is a React island — hydrates when visible -->
+    <AuthButton client:visible />
+  </header>
+
+  <!-- Sync Panel — React island, visible only when authenticated -->
+  <SyncPanel client:visible />
+
+  <!-- OAuth error banner (server-rendered, no client JS needed) -->
+  {oauthError && (
+    <div role="alert" style="padding: 10px 24px; background: rgba(239,68,68,0.12); border-bottom: 1px solid rgba(239,68,68,0.25); font-size: 13px; color: #fca5a5; display: flex; align-items: center; gap: 8px;">
+      <span aria-hidden="true">⚠</span>
+      {oauthError === 'oauth_denied' && 'Google sign-in was cancelled. You can still use PPlaner without syncing.'}
+      {oauthError === 'invalid_state' && 'Security check failed during sign-in. Please try again.'}
+      {oauthError === 'token_exchange_failed' && 'Could not complete Google sign-in. Please try again.'}
+      {oauthError === 'not_configured' && 'Google OAuth2 is not configured on this server.'}
+      {!['oauth_denied','invalid_state','token_exchange_failed','not_configured'].includes(oauthError) && 'An error occurred during sign-in. Please try again.'}
+    </div>
+  )}
+
+  <!-- Main calendar area — React island, hydrates immediately on load -->
+  <main id="main-content" class="calendar-outer" role="main">
+    <WeeklyCalendar client:load />
+  </main>
+</BaseLayout>

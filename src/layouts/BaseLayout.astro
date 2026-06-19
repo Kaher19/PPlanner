@@ -1,0 +1,43 @@
+---
+// PPlaner — Base HTML Layout
+// Applies global CSS, font preconnects, meta tags, and security meta attributes.
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'PPlaner — Your Daily Planner',
+  description = 'A beautiful weekly planner with Google Calendar sync. Plan your week freely — sync only when you want.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#080812" />
+
+    <!-- SEO -->
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Security: prevent clickjacking via meta (also set via vercel.json headers) -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+
+    <!-- Google Fonts preconnect for performance -->
+    <!-- NOTE: SRI is not applicable to preconnect/dns-prefetch links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+  <body>
+    <div class="bg-mesh" aria-hidden="true"></div>
+    <div class="app-shell">
+      <slot />
+    </div>
+  </body>
+</html>
