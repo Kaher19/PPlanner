@@ -27,10 +27,10 @@ const SESSION_MAX_AGE_SECONDS = 7 * 24 * 60 * 60; // 7 days
  * In development, uses a fixed dev-only fallback (logged as a warning).
  */
 function getEncryptionKey(): Uint8Array {
-  const secret = process.env.SESSION_SECRET;
+  const secret = import.meta.env.SESSION_SECRET;
 
   if (!secret || secret.length < 32) {
-    if (process.env.NODE_ENV === 'production') {
+    if (import.meta.env.PROD) {
       // Fail closed in production — no fallback
       throw new Error(
         '[PPlaner] SESSION_SECRET must be set in production. ' +
@@ -84,7 +84,7 @@ export async function createSessionCookie(data: SessionData): Promise<string> {
     .setExpirationTime(`${SESSION_MAX_AGE_SECONDS}s`)
     .encrypt(key);
 
-  const isProduction = process.env.NODE_ENV === 'production';
+  const isProduction = import.meta.env.PROD;
 
   const parts = [
     `${SESSION_COOKIE_NAME}=${token}`,

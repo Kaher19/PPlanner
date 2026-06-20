@@ -89,8 +89,8 @@ export async function getValidAccessToken(
 }
 
 async function refreshAccessToken(refreshToken: string): Promise<TokenRefreshResult> {
-  const clientId = process.env.GOOGLE_CLIENT_ID;
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+  const clientId = import.meta.env.GOOGLE_CLIENT_ID;
+  const clientSecret = import.meta.env.GOOGLE_CLIENT_SECRET;
 
   if (!clientId || !clientSecret) {
     throw new Error('Google OAuth2 credentials not configured');

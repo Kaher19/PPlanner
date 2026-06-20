@@ -53,8 +53,8 @@ export const GET: APIRoute = async ({ request }) => {
     return redirectTo('/?error=invalid_state');
   }
 
-  const clientId = process.env.GOOGLE_CLIENT_ID;
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+  const clientId = import.meta.env.GOOGLE_CLIENT_ID;
+  const clientSecret = import.meta.env.GOOGLE_CLIENT_SECRET;
 
   if (!clientId || !clientSecret) {
     return redirectTo('/?error=not_configured');

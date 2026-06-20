@@ -15,7 +15,7 @@ import type { APIRoute } from 'astro';
 import { getSession, createSessionCookie } from '../../../lib/session.js';
 
 export const GET: APIRoute = async ({ request }) => {
-  const clientId = process.env.GOOGLE_CLIENT_ID;
+  const clientId = import.meta.env.GOOGLE_CLIENT_ID;
 
   if (!clientId) {
     return new Response(null, {
